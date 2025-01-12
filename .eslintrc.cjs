@@ -52,7 +52,12 @@ module.exports = {
       {
         checksVoidReturn: { attributes: false }
       }
-    ]
+    ],
+    // end
+
+    // unicorn
+    'unicorn/no-null': 'off',
+    'unicorn/no-useless-undefined': 'off'
     // end
   }
 };
