@@ -3,6 +3,7 @@
 import { createEnv } from '@t3-oss/env-nextjs';
 import { z } from 'zod';
 
+const isDev = process.env.NODE_ENV === 'development';
 export const env = createEnv({
   /**
    * Specify your client-side environment variables schema here. This way you can ensure the app
@@ -17,7 +18,11 @@ export const env = createEnv({
    * This way you can ensure the app isn't built with invalid env vars.
    */
   server: {
-    // SERVER_VAR: z.string(),
+    AUTH_SECRET: z.string(),
+    AUTH_GOOGLE_ID: z.string(),
+    AUTH_GOOGLE_SECRET: z.string(),
+    DATABASE_URL: z.string().url(),
+    SHADOW_DATABASE_URL: isDev ? z.string().url() : z.string().url().optional(),
     NODE_ENV: z.enum(['development', 'test', 'production']).default('development')
   },
 
@@ -26,6 +31,15 @@ export const env = createEnv({
    * (e.g. middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
+    // client
+    // NEXT_PUBLIC_CLIENT_VAR: process.env.NEXT_PUBLIC_CLIENT_VAR,
+
+    // server
+    AUTH_SECRET: process.env.AUTH_SECRET,
+    AUTH_GOOGLE_ID: process.env.AUTH_GOOGLE_ID,
+    AUTH_GOOGLE_SECRET: process.env.AUTH_GOOGLE_SECRET,
+    DATABASE_URL: process.env.DATABASE_URL,
+    SHADOW_DATABASE_URL: process.env.SHADOW_DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV
   },
   /**
