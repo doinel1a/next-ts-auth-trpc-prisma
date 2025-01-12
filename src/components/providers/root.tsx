@@ -2,8 +2,8 @@ import React from 'react';
 
 import type { PropsWithChildren } from 'react';
 
+import ThemeProvider from './client/theme';
 import { TRPCProvider } from './client/trpc';
-import ThemeProvider from './theme';
 
 type TRootProvider = PropsWithChildren;
 
