@@ -17,13 +17,15 @@ import SuperJSON from 'superjson';
 
 import { createQueryClient } from '@/server/query-client';
 
-let clientQueryClientSingleton: QueryClient | undefined = undefined;
+let clientQueryClientSingleton: QueryClient | undefined;
 const getQueryClient = () => {
   if (typeof globalThis === 'undefined') {
     // server: always make a new query client
     return createQueryClient();
   }
+
   // browser: use singleton pattern to keep the same query client
+  // eslint-disable-next-line sonarjs/no-nested-assignment
   return (clientQueryClientSingleton ??= createQueryClient());
 };
 
@@ -33,7 +35,7 @@ export type RouterOutputs = inferRouterOutputs<AppRouter>;
 
 type TTRPCProvider = PropsWithChildren;
 
-export function TRPCProvider({ children }: TTRPCProvider) {
+export function TRPCProvider({ children }: Readonly<TTRPCProvider>) {
   const queryClient = getQueryClient();
 
   const [trpcClient] = useState(() =>
@@ -76,5 +78,6 @@ function getBaseUrl() {
     return `https://${process.env.VERCEL_URL}`;
   }
 
+  // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
   return `http://localhost:${process.env.PORT ?? 3000}`;
 }

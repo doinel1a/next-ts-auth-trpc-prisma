@@ -12,7 +12,7 @@ const Counter = dynamic(() => import('@/components/counter'), {
   loading: () => <Skeleton className='h-44 w-72 rounded-md' />
 });
 
-export default async function Home() {
+export default async function HomePage() {
   const session = await auth();
   const post = await api.v1.post.getLatest();
 

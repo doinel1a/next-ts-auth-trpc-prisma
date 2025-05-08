@@ -7,7 +7,7 @@ import { TRPCProvider } from './client/trpc';
 
 type TRootProvider = PropsWithChildren;
 
-export default function RootProvider({ children }: TRootProvider) {
+export default function RootProvider({ children }: Readonly<TRootProvider>) {
   return (
     <ThemeProvider>
       <TRPCProvider>{children}</TRPCProvider>
